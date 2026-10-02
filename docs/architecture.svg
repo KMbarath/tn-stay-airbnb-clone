@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" font-family="Helvetica, Arial, sans-serif">
+<defs>
+<marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0L10 4L0 8z" fill="#444"/></marker>
+<style>
+.t{font-size:15px;fill:#222}.h{font-size:19px;font-weight:700;fill:#222}.s{font-size:12.5px;fill:#555}
+.b{fill:#fff;stroke:#444;stroke-width:1.6;rx:10}.z{fill:#fafafa;stroke:#bbb;stroke-width:1.4;stroke-dasharray:6 5;rx:16}
+.l{stroke:#444;stroke-width:1.8;fill:none;marker-end:url(#a)}
+</style></defs>
+<rect width="1600" height="1000" fill="#fff"/>
+<text x="40" y="48" class="h" style="font-size:26px">Production architecture: vacation-rental marketplace (Airbnb-scale), India-first, multi-region</text>
+<text x="40" y="74" class="s">Read-heavy (browse/search ~100:1 vs. book), strong consistency only on availability and payments, everything else eventually consistent.</text>
+
+<rect x="40" y="100" width="300" height="360" class="z"/><text x="60" y="128" class="h">Clients and edge</text>
+<rect x="60" y="145" width="260" height="62" class="b" style="fill:#fff4f5"/><text x="76" y="171" class="t">Web (Next.js) · iOS · Android</text><text x="76" y="190" class="s">Listing pages ISR + stale-while-revalidate</text>
+<rect x="60" y="225" width="260" height="62" class="b"/><text x="76" y="251" class="t">CDN (CloudFront / Vercel Edge)</text><text x="76" y="270" class="s">AVIF/WebP images, HTML cache, brotli</text>
+<rect x="60" y="305" width="260" height="62" class="b"/><text x="76" y="331" class="t">WAF + bot protection + rate limits</text><text x="76" y="350" class="s">DDoS, credential stuffing, scraping</text>
+<rect x="60" y="385" width="260" height="55" class="b"/><text x="76" y="410" class="t">Global LB / Anycast DNS</text><text x="76" y="428" class="s">Latency routing: Mumbai, Chennai, SG</text>
+
+<rect x="390" y="100" width="420" height="360" class="z"/><text x="410" y="128" class="h">API tier (stateless, autoscaled on K8s)</text>
+<rect x="410" y="145" width="380" height="56" class="b" style="fill:#fff4f5"/><text x="426" y="170" class="t">API Gateway / BFF (GraphQL + REST)</text><text x="426" y="189" class="s">authN (OIDC/JWT), request shaping, per-client caching</text>
+<rect x="410" y="218" width="180" height="56" class="b"/><text x="424" y="242" class="t">Listing svc</text><text x="424" y="260" class="s">content, photos, pricing</text>
+<rect x="610" y="218" width="180" height="56" class="b"/><text x="624" y="242" class="t">Search svc</text><text x="624" y="260" class="s">query, rank, geo filters</text>
+<rect x="410" y="290" width="180" height="56" class="b"/><text x="424" y="314" class="t">Booking svc</text><text x="424" y="332" class="s">availability, holds, saga</text>
+<rect x="610" y="290" width="180" height="56" class="b"/><text x="624" y="314" class="t">Payments svc</text><text x="624" y="332" class="s">UPI · cards · netbanking</text>
+<rect x="410" y="362" width="180" height="56" class="b"/><text x="424" y="386" class="t">Users / Host svc</text><text x="424" y="404" class="s">profiles, KYC, wishlists</text>
+<rect x="610" y="362" width="180" height="56" class="b"/><text x="624" y="386" class="t">Reviews / Messaging</text><text x="624" y="404" class="s">reviews, chat, notifications</text>
+
+<rect x="860" y="100" width="340" height="360" class="z"/><text x="880" y="128" class="h">Async backbone</text>
+<rect x="880" y="145" width="300" height="70" class="b" style="fill:#fff4f5"/><text x="896" y="171" class="t">Kafka (partitioned by listing_id)</text><text x="896" y="190" class="s">booking.created, price.changed, review.added</text>
+<rect x="880" y="232" width="300" height="56" class="b"/><text x="896" y="258" class="t">Workers (K8s jobs / KEDA)</text><text x="896" y="277" class="s">email/SMS/push, invoice PDF, image resize</text>
+<rect x="880" y="305" width="300" height="56" class="b"/><text x="896" y="331" class="t">Outbox + CDC (Debezium)</text><text x="896" y="350" class="s">no dual writes; idempotent consumers</text>
+<rect x="880" y="378" width="300" height="56" class="b"/><text x="896" y="404" class="t">Airflow / Spark (analytics, ML)</text><text x="896" y="423" class="s">ranking features, fraud, dynamic pricing</text>
+
+<rect x="40" y="500" width="1160" height="330" class="z"/><text x="60" y="528" class="h">Data and search layer</text>
+<rect x="60" y="545" width="260" height="125" class="b" style="fill:#fff4f5"/><text x="76" y="572" class="t">PostgreSQL (Aurora) sharded</text><text x="76" y="593" class="s">Bookings, availability calendar, users</text><text x="76" y="611" class="s">Shard by listing_id / region; 1 primary +</text><text x="76" y="629" class="s">read replicas; row locks / exclusion</text><text x="76" y="647" class="s">constraints prevent double booking</text>
+<rect x="345" y="545" width="260" height="125" class="b"/><text x="361" y="572" class="t">OpenSearch / Elasticsearch</text><text x="361" y="593" class="s">Listings index: geo_point, amenities,</text><text x="361" y="611" class="s">price, availability bitmap; sharded by</text><text x="361" y="629" class="s">region; fed by Kafka (near real-time),</text><text x="361" y="647" class="s">learning-to-rank for relevance</text>
+<rect x="630" y="545" width="260" height="125" class="b"/><text x="646" y="572" class="t">Redis cluster</text><text x="646" y="593" class="s">Hot listing cache, price quotes,</text><text x="646" y="611" class="s">sessions, rate limiters, short-lived</text><text x="646" y="629" class="s">availability holds with TTL</text>
+<rect x="915" y="545" width="265" height="125" class="b"/><text x="931" y="572" class="t">DynamoDB / Cassandra</text><text x="931" y="593" class="s">Messages, reviews, wishlists,</text><text x="931" y="611" class="s">notification state: high write volume,</text><text x="931" y="629" class="s">partition by user_id</text>
+<rect x="60" y="695" width="400" height="110" class="b"/><text x="76" y="722" class="t">Object storage (S3) + image pipeline</text><text x="76" y="743" class="s">Originals in S3, resized AVIF/WebP variants via lambda,</text><text x="76" y="761" class="s">served from CDN with immutable hashed URLs;</text><text x="76" y="779" class="s">lifecycle rules move cold media to infrequent access</text>
+<rect x="485" y="695" width="330" height="110" class="b"/><text x="501" y="722" class="t">Data warehouse / lake</text><text x="501" y="743" class="s">S3 + Iceberg + Snowflake/BigQuery, fed by CDC;</text><text x="501" y="761" class="s">BI, pricing and fraud models</text>
+<rect x="840" y="695" width="340" height="110" class="b"/><text x="856" y="722" class="t">Secrets, KMS, PII vault</text><text x="856" y="743" class="s">Field-level encryption for ID/KYC and payments,</text><text x="856" y="761" class="s">DPDP-compliant India data residency</text>
+
+<rect x="1250" y="100" width="310" height="730" class="z"/><text x="1270" y="128" class="h">Deployment and ops</text>
+<rect x="1270" y="145" width="270" height="92" class="b" style="fill:#fff4f5"/><text x="1286" y="171" class="t">Multi-region active-active</text><text x="1286" y="192" class="s">ap-south-1 (Mumbai) + ap-south-2 +</text><text x="1286" y="210" class="s">ap-southeast-1 DR. 3 AZs per region.</text><text x="1286" y="228" class="s">Cross-region replica for failover.</text>
+<rect x="1270" y="255" width="270" height="92" class="b"/><text x="1286" y="281" class="t">CI/CD + IaC</text><text x="1286" y="302" class="s">GitHub Actions, Terraform, Argo CD GitOps,</text><text x="1286" y="320" class="s">canary + blue/green, feature flags,</text><text x="1286" y="338" class="s">automatic rollback on SLO burn</text>
+<rect x="1270" y="365" width="270" height="92" class="b"/><text x="1286" y="391" class="t">Autoscaling</text><text x="1286" y="412" class="s">HPA on RPS/latency, KEDA on Kafka lag,</text><text x="1286" y="430" class="s">pre-scaling for festival peaks</text><text x="1286" y="448" class="s">(Pongal, Diwali, summer holidays)</text>
+<rect x="1270" y="475" width="270" height="92" class="b"/><text x="1286" y="501" class="t">Observability</text><text x="1286" y="522" class="s">OpenTelemetry, Prometheus/Grafana,</text><text x="1286" y="540" class="s">Loki, Sentry, RUM Core Web Vitals,</text><text x="1286" y="558" class="s">SLOs: p95 listing &lt; 300 ms</text>
+<rect x="1270" y="585" width="270" height="92" class="b"/><text x="1286" y="611" class="t">Resilience</text><text x="1286" y="632" class="s">Circuit breakers, retries + jitter,</text><text x="1286" y="650" class="s">bulkheads, graceful degradation</text><text x="1286" y="668" class="s">(search falls back to cache)</text>
+<rect x="1270" y="695" width="270" height="110" class="b"/><text x="1286" y="721" class="t">Security</text><text x="1286" y="742" class="s">Zero-trust mesh (mTLS), SAST/DAST,</text><text x="1286" y="760" class="s">least-privilege IAM, audit logs,</text><text x="1286" y="778" class="s">PCI-DSS scope isolated to Payments</text>
+
+<path class="l" d="M340 175 H390"/><path class="l" d="M810 175 H860"/>
+<path class="l" d="M600 460 V500"/><path class="l" d="M1030 460 V500"/>
+
+<rect x="40" y="860" width="1520" height="110" class="b" style="fill:#f7f7f7;stroke:#ddd"/>
+<text x="60" y="888" class="h">Scaling strategy summary</text>
+<text x="60" y="914" class="t"><tspan font-weight="700">Frontend:</tspan> SSR/ISR + edge caching, code-split overlays (photo tour, lightbox), image CDN with responsive AVIF, RUM-driven budgets.</text>
+<text x="60" y="938" class="t"><tspan font-weight="700">Backend:</tspan> stateless services behind a gateway, CQRS (writes to Postgres, reads from search/cache), saga for booking + payment, idempotency keys.</text>
+<text x="60" y="962" class="t"><tspan font-weight="700">Storage/Search/Deploy:</tspan> shard by listing_id/region, replicas for reads, denormalised OpenSearch index via CDC, active-active regions with GitOps canaries.</text>
+</svg>

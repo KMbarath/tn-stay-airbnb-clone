@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" role="img" aria-labelledby="title desc">
+  <title id="title">TN Stay Airbnb Clone Architecture</title>
+  <desc id="desc">Architecture diagram for a desktop React and Vite vacation rental listing application.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#475569"/></marker>
+    <style>
+      .title{font:700 30px Inter,Arial,sans-serif;fill:#0f172a}.subtitle{font:16px Inter,Arial,sans-serif;fill:#64748b}
+      .group{fill:#f8fafc;stroke:#cbd5e1;stroke-width:2;rx:18}.card{fill:#fff;stroke:#94a3b8;stroke-width:1.6;rx:12}
+      .accent{fill:#fff1f2;stroke:#fb7185}.h{font:700 19px Inter,Arial,sans-serif;fill:#0f172a}.t{font:600 16px Inter,Arial,sans-serif;fill:#1e293b}.s{font:14px Inter,Arial,sans-serif;fill:#64748b}
+      .line{stroke:#475569;stroke-width:2.2;fill:none;marker-end:url(#arrow)}.dash{stroke:#94a3b8;stroke-width:2;stroke-dasharray:8 7;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1500" height="900" fill="#fff"/>
+  <text x="48" y="54" class="title">TN Stay Airbnb Clone Architecture</text>
+  <text x="48" y="82" class="subtitle">Desktop-first React listing experience with local demo state, static photo assets, and Vite deployment.</text>
+
+  <rect x="48" y="125" width="290" height="560" class="group"/>
+  <text x="72" y="162" class="h">User and browser</text>
+  <rect x="72" y="185" width="242" height="92" class="card accent"/>
+  <text x="90" y="218" class="t">Desktop browser</text><text x="90" y="244" class="s">Chrome / Edge</text><text x="90" y="264" class="s">Keyboard and pointer input</text>
+  <rect x="72" y="305" width="242" height="92" class="card"/>
+  <text x="90" y="338" class="t">User interactions</text><text x="90" y="364" class="s">Dates, guests, reserve, save</text><text x="90" y="384" class="s">Share, photo navigation</text>
+  <rect x="72" y="425" width="242" height="92" class="card"/>
+  <text x="90" y="458" class="t">Browser storage</text><text x="90" y="484" class="s">Wishlist state via localStorage</text><text x="90" y="504" class="s">No backend required</text>
+  <rect x="72" y="545" width="242" height="92" class="card"/>
+  <text x="90" y="578" class="t">Accessibility layer</text><text x="90" y="604" class="s">Focus trap, Escape, labels</text><text x="90" y="624" class="s">Reduced-motion support</text>
+
+  <rect x="390" y="125" width="520" height="560" class="group"/>
+  <text x="414" y="162" class="h">React + TypeScript application</text>
+  <rect x="414" y="185" width="472" height="82" class="card accent"/>
+  <text x="434" y="218" class="t">App shell and page state</text><text x="434" y="244" class="s">App.tsx · booking state · nav scroll spy · toast state</text>
+  <rect x="414" y="292" width="222" height="118" class="card"/>
+  <text x="434" y="325" class="t">Listing UI</text><text x="434" y="351" class="s">Header, hero gallery</text><text x="434" y="373" class="s">Booking card, calendar</text><text x="434" y="395" class="s">Amenities, reviews, map</text>
+  <rect x="664" y="292" width="222" height="118" class="card"/>
+  <text x="684" y="325" class="t">Overlay UI</text><text x="684" y="351" class="s">Photo Tour</text><text x="684" y="373" class="s">Lightbox</text><text x="684" y="395" class="s">Amenities modal</text>
+  <rect x="414" y="435" width="222" height="118" class="card"/>
+  <text x="434" y="468" class="t">Data and helpers</text><text x="434" y="494" class="s">listing.ts · photos.ts</text><text x="434" y="516" class="s">format.ts · useDialog.ts</text><text x="434" y="538" class="s">Reusable domain data</text>
+  <rect x="664" y="435" width="222" height="118" class="card"/>
+  <text x="684" y="468" class="t">Design system</text><text x="684" y="494" class="s">styles.css tokens</text><text x="684" y="516" class="s">Responsive gallery rules</text><text x="684" y="538" class="s">Hover and modal motion</text>
+  <rect x="414" y="578" width="472" height="72" class="card"/>
+  <text x="434" y="608" class="t">Vite + React build pipeline</text><text x="434" y="632" class="s">TypeScript check → optimized static bundle</text>
+
+  <rect x="962" y="125" width="490" height="560" class="group"/>
+  <text x="986" y="162" class="h">Static assets and delivery</text>
+  <rect x="986" y="185" width="442" height="92" class="card accent"/>
+  <text x="1006" y="218" class="t">public/photos/</text><text x="1006" y="244" class="s">Realistic property, host, and reviewer images</text><text x="1006" y="264" class="s">Loaded locally by stable URL</text>
+  <rect x="986" y="305" width="210" height="104" class="card"/>
+  <text x="1006" y="338" class="t">Photo manifest</text><text x="1006" y="364" class="s">Categories and counts</text><text x="1006" y="386" class="s">Hero ordering</text>
+  <rect x="1218" y="305" width="210" height="104" class="card"/>
+  <text x="1238" y="338" class="t">Architecture docs</text><text x="1238" y="364" class="s">PNG and SVG diagram</text><text x="1238" y="386" class="s">Submission reference</text>
+  <rect x="986" y="437" width="442" height="92" class="card"/>
+  <text x="1006" y="470" class="t">Static hosting</text><text x="1006" y="496" class="s">Vercel / Netlify / any static web host</text><text x="1006" y="516" class="s">CDN-served index.html, JS, CSS, and images</text>
+  <rect x="986" y="557" width="442" height="72" class="card"/>
+  <text x="1006" y="587" class="t">Quality and project config</text><text x="1006" y="611" class="s">AGENTS.md · CLAUDE.md · .claude/ · PROMPTS.md</text>
+
+  <path d="M338 232H390" class="line"/><path d="M910 232H962" class="line"/>
+  <path d="M338 351H390" class="dash"/><path d="M910 351H962" class="dash"/>
+  <path d="M338 471H390" class="dash"/><path d="M910 471H962" class="line"/>
+  <path d="M650 685V760H1120V685" class="line"/>
+  <rect x="48" y="735" width="1404" height="112" class="card"/>
+  <text x="72" y="772" class="h">Runtime flow</text>
+  <text x="72" y="802" class="s">1. Browser loads the Vite bundle and local listing/photo data.  2. React renders the listing and manages interactions in memory.</text>
+  <text x="72" y="826" class="s">3. Images are served from public/photos.  4. Wishlist state persists locally.  5. The production bundle can be deployed to any static host.</text>
+</svg>
